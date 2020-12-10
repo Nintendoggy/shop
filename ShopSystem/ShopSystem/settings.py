@@ -139,6 +139,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+# 配置静态文件的加载路径
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 # 配置工程日志
 LOGGING = {
