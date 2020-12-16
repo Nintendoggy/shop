@@ -1,3 +1,4 @@
+import sys
 from pathlib import Path
 import time
 import os
@@ -22,7 +23,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
+sys.path.insert(0, os.path.join(BASE_DIR, 'ShopSystem\\apps'))
+print(sys.path)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ShopSystem.apps.users'
 ]
 
 MIDDLEWARE = [
@@ -40,6 +43,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
 ROOT_URLCONF = 'ShopSystem.urls'
@@ -98,6 +102,13 @@ CACHES = {
     "session": {  # session
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://192.168.145.129:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "verify_code": {  # 验证码
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.145.129:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -215,3 +226,6 @@ LOGGING = {
         },
     }
 }
+
+# 指定本项目用户模型类
+AUTH_USER_MODEL = 'users.User'
